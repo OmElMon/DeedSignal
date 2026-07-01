@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="DeedSignal — Palm Beach County foreclosure and auction intelligence" />
+  <title>DeedSignal — See the Deal Before the Gavel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="DeedSignal home">
+        <span class="brand-mark">D</span>
+        <span>deedsignal<span class="lime">.</span></span>
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-item active" data-page="discover"><span class="nav-icon">⌂</span> Discover</button>
+        <button class="nav-item" data-page="auctions"><span class="nav-icon">◫</span> Auctions <span class="nav-badge">12</span></button>
+        <button class="nav-item" data-page="map"><span class="nav-icon">⌖</span> Area map</button>
+        <button class="nav-item" data-page="analysis"><span class="nav-icon">⌁</span> Deal analyzer</button>
+        <button class="nav-item" data-page="saved"><span class="nav-icon">♡</span> Saved <span id="savedCount" class="nav-count">2</span></button>
+      </nav>
+
+      <div class="sidebar-spacer"></div>
+      <div class="trial-card">
+        <span class="eyebrow">MINI-MOGUL PLAN</span>
+        <strong>3 analyses left</strong>
+        <p>Unlock title reports and unlimited deal analysis.</p>
+        <button id="upgradeBtn" class="text-button">Explore plans →</button>
+      </div>
+      <button class="profile-card" id="profileBtn">
+        <span class="avatar">JM</span>
+        <span><strong>Jordan Mitchell</strong><small>Investor account</small></span>
+        <span class="more">•••</span>
+      </button>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="mobile-brand"><span class="brand-mark">D</span><strong>deedsignal.</strong></div>
+        <label class="global-search">
+          <span>⌕</span>
+          <input id="searchInput" type="search" placeholder="Search address, city, ZIP or case number" />
+          <kbd>⌘ K</kbd>
+        </label>
+        <div class="top-actions">
+          <button class="live-pill"><span></span> Clerk sync live</button>
+          <button class="icon-button" aria-label="Notifications">♢<i></i></button>
+          <button class="primary-button" id="newAnalysisBtn">+ New analysis</button>
+        </div>
+      </header>
+
+      <div class="page" id="discoverPage">
+        <section class="hero-row">
+          <div>
+            <p class="section-kicker">PALM BEACH COUNTY · JULY 2026</p>
+            <h1>Find the deal<br><em>before the crowd.</em></h1>
+            <p class="hero-copy">Court-sourced foreclosure listings, neighborhood signals, and investor-grade analysis—all in one view.</p>
+          </div>
+          <div class="market-pulse">
+            <div class="pulse-top"><span><i></i> MARKET PULSE</span><small>Updated 8 min ago</small></div>
+            <div class="pulse-stats">
+              <div><strong>127</strong><span>Active cases</span><small class="up">↑ 8.5%</small></div>
+              <div><strong>38</strong><span>July auctions</span><small>12 this week</small></div>
+              <div><strong>$412k</strong><span>Median judgment</span><small class="down">↓ 3.2%</small></div>
+            </div>
+            <div class="sparkline" aria-hidden="true">
+              <svg viewBox="0 0 440 55" preserveAspectRatio="none"><path d="M0,43 C40,46 55,24 91,31 S151,49 184,29 S235,38 271,16 S330,26 360,13 S408,23 440,3"/><path class="fill" d="M0,43 C40,46 55,24 91,31 S151,49 184,29 S235,38 271,16 S330,26 360,13 S408,23 440,3 L440,55 L0,55Z"/></svg>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-grid">
+          <div class="listings-panel">
+            <div class="section-heading">
+              <div><span class="eyebrow">CURATED OPPORTUNITIES</span><h2>Upcoming auctions</h2></div>
+              <div class="view-controls">
+                <button class="view-btn active" data-view="cards" aria-label="Card view">▦</button>
+                <button class="view-btn" data-view="compact" aria-label="Compact view">☷</button>
+              </div>
+            </div>
+
+            <div class="filter-bar">
+              <button class="filter active" data-filter="all">All listings <span>12</span></button>
+              <button class="filter" data-filter="week">This week <span>5</span></button>
+              <button class="filter" data-filter="value">Best value <span>4</span></button>
+              <button class="filter filter-more" id="moreFiltersBtn">Sliders&nbsp; Filters</button>
+            </div>
+            <div id="activeFilters" class="active-filters" hidden></div>
+            <div id="listingsGrid" class="listings-grid" aria-live="polite"></div>
+            <button class="load-more" id="loadMoreBtn">View all 12 opportunities <span>→</span></button>
+          </div>
+
+          <aside class="right-rail">
+            <section class="calendar-card">
+              <div class="card-title-row">
+                <div><span class="eyebrow">AUCTION CALENDAR</span><h3 id="calendarTitle">July 2026</h3></div>
+                <div><button id="prevMonth" aria-label="Previous month">‹</button><button id="nextMonth" aria-label="Next month">›</button></div>
+              </div>
+              <div class="weekdays"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span></div>
+              <div id="calendarGrid" class="calendar-grid"></div>
+              <div class="calendar-legend"><span><i class="dot lime-dot"></i> Auctions</span><span><i class="dot red-dot"></i> Cancelled</span><button id="calendarViewBtn">Full calendar →</button></div>
+            </section>
+
+            <section class="map-card">
+              <div class="card-title-row map-title"><div><span class="eyebrow">AREA INTELLIGENCE</span><h3>Palm Beach activity</h3></div><button id="expandMapBtn">Expand ↗</button></div>
+              <div class="mini-map" id="miniMap">
+                <svg class="roads" viewBox="0 0 500 245" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M-10 190 C90 155 110 97 220 110 S350 200 520 130"/>
+                  <path d="M95 -10 C90 70 140 112 120 260"/>
+                  <path d="M335 -10 C310 60 350 122 305 260"/>
+                  <path d="M-10 58 C80 80 170 45 260 69 S410 90 520 40"/>
+                </svg>
+                <span class="city-label" style="left:52%;top:20%">West Palm Beach</span>
+                <span class="city-label" style="left:20%;top:68%">Wellington</span>
+                <span class="city-label" style="left:62%;top:72%">Lake Worth</span>
+                <button class="map-pin hot" style="left:65%;top:35%" data-area="West Palm Beach" data-score="92"><span>7</span></button>
+                <button class="map-pin" style="left:31%;top:48%" data-area="Royal Palm Beach" data-score="76"><span>3</span></button>
+                <button class="map-pin" style="left:69%;top:69%" data-area="Lake Worth" data-score="84"><span>5</span></button>
+                <button class="map-pin small" style="left:45%;top:78%" data-area="Greenacres" data-score="68"><span>2</span></button>
+                <div id="mapTooltip" class="map-tooltip" hidden></div>
+              </div>
+              <div class="map-metrics"><div><strong>+14%</strong><span>Foot traffic</span></div><div><strong>8.2/10</strong><span>Family score</span></div><div><strong>17 min</strong><span>Avg. commute</span></div></div>
+            </section>
+          </aside>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="modal-backdrop" id="detailModal" hidden>
+    <section class="detail-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="close-modal" data-close aria-label="Close">×</button>
+      <div class="modal-photo" id="modalPhoto"><span id="modalTag" class="property-tag"></span><button class="modal-save" id="modalSave">♡</button></div>
+      <div class="modal-body">
+        <div class="modal-heading"><div><span class="eyebrow" id="modalCase"></span><h2 id="modalTitle"></h2><p id="modalLocation"></p></div><div class="score-ring"><strong id="modalScore"></strong><span>DEAL<br>SCORE</span></div></div>
+        <div class="modal-metrics" id="modalMetrics"></div>
+        <div class="deal-callout"><span>DEEDSIGNAL ESTIMATE</span><strong id="modalUpside"></strong><p>Projected gross upside before renovation, carrying costs, and fees.</p></div>
+        <div class="modal-actions"><button class="secondary-button" id="driveReportBtn">Order drive report · $49</button><button class="primary-button" id="analyzeBtn">Run full analysis →</button></div>
+        <p class="disclaimer">Demo data only. Verify court records, title, liens, occupancy, and property condition before bidding.</p>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="analysisModal" hidden>
+    <section class="analysis-modal" role="dialog" aria-modal="true" aria-labelledby="analysisTitle">
+      <button class="close-modal" data-close aria-label="Close">×</button>
+      <span class="eyebrow">QUICK DEAL ANALYZER</span>
+      <h2 id="analysisTitle">Know your maximum bid.</h2>
+      <p>Enter your assumptions. We’ll calculate a conservative ceiling using the 70% rule.</p>
+      <form id="analysisForm" class="analysis-form">
+        <label>After-repair value <span>$</span><input id="arvInput" type="number" value="610000" min="0"></label>
+        <label>Renovation budget <span>$</span><input id="repairInput" type="number" value="65000" min="0"></label>
+        <label>Holding & closing costs <span>$</span><input id="costInput" type="number" value="32000" min="0"></label>
+        <div class="analysis-result"><span>Suggested max bid</span><strong id="maxBid">$330,000</strong><small>ARV × 70% − renovation − costs</small></div>
+        <button type="submit" class="primary-button">Save analysis</button>
+      </form>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="plansModal" hidden>
+    <section class="plans-modal" role="dialog" aria-modal="true" aria-labelledby="plansTitle">
+      <button class="close-modal" data-close aria-label="Close">×</button>
+      <span class="eyebrow">MEMBERSHIP</span><h2 id="plansTitle">Pick your investing pace.</h2>
+      <div class="plans-grid">
+        <article><h3>Alpha</h3><strong>Free</strong><p>Browse listings and calendar updates.</p><button class="secondary-button">Current plan</button></article>
+        <article class="featured"><span>POPULAR</span><h3>Mini-Mogul</h3><strong>$49<small>/mo</small></strong><p>Deal scores, saved searches, and 5 analyses.</p><button class="primary-button planSelect">Choose Mini-Mogul</button></article>
+        <article><h3>Mogul VIP</h3><strong>$149<small>/mo</small></strong><p>Unlimited analysis, title support, and webinars.</p><button class="secondary-button planSelect">Go VIP</button></article>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
